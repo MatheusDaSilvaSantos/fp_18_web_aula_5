@@ -1,0 +1,10 @@
+﻿@model List<fp_web_aula_1_core.Models.Noticia>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li style="background-color:red;">
+            @item.Titulo
+        </li>
+    }
+</ul>

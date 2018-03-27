@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+<h2>@ViewBag.Mensagem</h2>
+
+<h2>@ViewData["Mensagem2"]</h2>
+
+
+
+@await Component.InvokeAsync("Noticias", new { total = 3, noticiasUrgentes = false })
+
+<vc:noticias noticias-urgentes="true" total="5">
+
+</vc:noticias>
+
+<img src="~/russia-kremlin-getty.jpg" asp-append-version="true" width="200px" />
+@*<select asp-></select>*@
+
+
+<email mail-to="rodolfo"></email>
