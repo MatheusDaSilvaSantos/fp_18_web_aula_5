@@ -1,4 +1,5 @@
-﻿using fp_web_aula_1_core.Models;
+﻿using fp_18_web_aula_1_api.Hubs;
+using fp_web_aula_1_core.Models;
 using fp_web_aula_1_core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -75,6 +76,8 @@ namespace fp_18_web_aula_1_api
                 };
             });
 
+            services.AddSignalR();
+
 
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -89,7 +92,7 @@ namespace fp_18_web_aula_1_api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-
+            app.UseStaticFiles();
             app.UseResponseCompression();
 
             app.UseAuthentication();
@@ -102,7 +105,12 @@ namespace fp_18_web_aula_1_api
                name: "default",
                template: "{controller=Home}/{action=Index}/{id?}");
            });
-           
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chathub");
+            });
+
         }
     }
 

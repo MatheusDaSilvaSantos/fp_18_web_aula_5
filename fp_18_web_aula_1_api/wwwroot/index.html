@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <style>
+        th, td {
+            padding: 3px;
+        }
+    </style>
+    <div class="row">
+        <p></p>
+        <div class="col-md-12">
+            <form action="#">
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td colspan="2">
+                            <input type="text" id="user" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Message</td>
+                        <td colspan="2">
+                            <input type="text" id="message" />
+                        </td>
+                        <td>
+                            <input type="submit" id="send" value="Send" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <p></p>
+            <ul id="messages" style="list-style-type:none;"></ul>
+        </div>
+    </div>
+    <script src="/lib/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnection('/chathub');
+
+        connection.on('ReceiveMessage', (timestamp, user, message) => {
+            const encodedUser = user;
+            const encodedMsg = message;
+            const listItem = document.createElement('li');
+            listItem.innerHTML = timestamp + ' <b>' + encodedUser + '</b>: ' + encodedMsg;
+            document.getElementById('messages').appendChild(listItem);
+        });
+
+        document.getElementById('send').addEventListener('click', event => {
+            const msg = document.getElementById('message').value;
+            const usr = document.getElementById('user').value;
+
+            connection.invoke('SendMessage', usr, msg).catch(err => showErr(err));
+            event.preventDefault();
+        });
+
+        function showErr(msg) {
+            const listItem = document.createElement('li');
+            listItem.setAttribute('style', 'color: red');
+            listItem.innerText = msg.toString();
+            document.getElementById('messages').appendChild(listItem);
+        }
+
+        connection.start().catch(err => showErr(err));
+    </script>
+    
+</body>
+</html>
