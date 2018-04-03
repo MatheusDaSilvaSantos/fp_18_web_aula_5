@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using fp_web_aula_1_core.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace fp_web_aula_1.Controllers
 {
+    //[Authorize(Roles ="admins")]
+    [Authorize]
     public class TimesController : Controller
     {
         private readonly CopaContext _context;

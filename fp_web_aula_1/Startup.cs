@@ -19,12 +19,20 @@ namespace fp_web_aula_1
             services.AddScoped<INoticiaService, NoticiaService>();
             //services.AddSingleton<ILogerApi, LogerApi>();
 
-            var connection =  @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb2;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb2;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<CopaContext>
                 (options => options.UseSqlServer(connection));
 
-
             services.AddMvc();
+
+            services.AddAuthentication("app")
+                .AddCookie("app",
+                o =>
+                {
+                    o.LoginPath = "/account/index";
+                    o.AccessDeniedPath = "/account/denied";
+                });
+
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -51,6 +59,8 @@ namespace fp_web_aula_1
             app.UseMeuMiddleware();
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(r =>
             {
