@@ -1,4 +1,5 @@
 ﻿using fp_web_aula_1_core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace fp_18_web_aula_1_api.Controllers
     [Route("api/[controller]")]
     //[ApiController]
     //[EnableCors("Default")]
+    [Authorize]
     public class TimesController : Controller
     {
         private CopaContext _context;
