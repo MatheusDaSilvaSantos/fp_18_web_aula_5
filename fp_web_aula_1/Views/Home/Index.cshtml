@@ -7,21 +7,29 @@
 
 <h2>@ViewData["Mensagem2"]</h2>
 
+<div>
+    Carroseul
+</div>
+<div>
+    Chaves
+</div>
+<div>
+    @await Component.InvokeAsync("Noticias", new { total = 3, noticiasUrgentes = false })
+
+    <vc:noticias noticias-urgentes="true" total="5">
+    </vc:noticias>
+</div>
 
 
-@await Component.InvokeAsync("Noticias", new { total = 3, noticiasUrgentes = false })
 
-<vc:noticias noticias-urgentes="true" total="5">
 
-</vc:noticias>
-
-<img src="~/russia-kremlin-getty.jpg" asp-append-version="true" width="200px" />
+@*<img src="~/russia-kremlin-getty.jpg" asp-append-version="true" width="200px" />*@
 @*<select asp-></select>*@
 
 
 <email mail-to="rodolfo"></email>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+@*<script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -29,4 +37,4 @@
     $.get("http://localhost:9833/api/times/", function (data, status) {
         console.log("Data: " + data);
     });
-</script>
+</script>*@
