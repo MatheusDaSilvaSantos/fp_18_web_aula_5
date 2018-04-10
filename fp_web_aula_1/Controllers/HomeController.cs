@@ -25,7 +25,7 @@ namespace fp_web_aula_1.Controllers
             _log.Log(Request.HttpContext, TotalTime);
             _noticiaService.List();
 
-            ViewBag.Mensagem = "Fifa Russia 2018";
+            ViewBag.Mensagem = "Fifa Rússia 2018";
             //ViewData["Mensagem2"] = "Hello2";
 
             var chaves = _chaveService.List();
