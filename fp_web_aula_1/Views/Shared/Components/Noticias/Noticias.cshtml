@@ -1,10 +1,15 @@
 ﻿@model List<fp_web_aula_1_core.Models.Noticia>
 
-<ul>
+<ul class="noticias">
     @foreach (var item in Model)
     {
         <li>
-            @item.Titulo
+            <a href="@item.Url">
+                <img src="@item.Imagem" alt="@item.DescricaoImagem" />
+                <span>
+                    @item.Titulo
+                </span>
+            </a>
         </li>
     }
 </ul>

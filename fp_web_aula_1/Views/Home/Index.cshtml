@@ -1,40 +1,107 @@
-﻿
+﻿@model List<fp_18_web_aula_1_core.Models.Chave>;
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
 <h2>@ViewBag.Mensagem</h2>
 
-<h2>@ViewData["Mensagem2"]</h2>
+<div id="news-carroseul">
+    <div class="jcarousel-wrapper">
+        <div class="jcarousel">
+            <ul>
+                <li>
+                    <img class="carroseulimage" src="~/assets/carroseul/carosseul-1.jpg" />
+                </li>
+                <li>
+                    <img class="carroseulimage" src="~/assets/carroseul/carosseul-2.jpg" />
+                </li>
+                <li>
+                    <img class="carroseulimage" src="~/assets/carroseul/carosseul-3.jpg" />
+                </li>
+            </ul>
+        </div>
 
-<div>
-    Carroseul
-</div>
-<div>
-    Chaves
-</div>
-<div>
-    @await Component.InvokeAsync("Noticias", new { total = 3, noticiasUrgentes = false })
+        <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+        <a href="#" class="jcarousel-control-next">&rsaquo;</a>
 
-    <vc:noticias noticias-urgentes="true" total="5">
+    </div>
+</div>
+<div id="chaves">
+    <h2>Grupos</h2>
+    <ul class="grupos">
+        @foreach (var item in Model)
+        {
+            <li>
+                <span>@item.Nome</span>
+                <ul class="times">
+                    @foreach (var time in item.Times)
+                    {
+                        <li>
+                            <img src="~/assets/bandeiras/@(time.Bandeira+".jpg")" alt="@item.Nome" />
+                            @time.Nome
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+    <br style="clear:both;" />
+
+</div>
+<div id="news">
+    <h2>Notícias</h2>
+    <vc:noticias noticias-urgentes="false" total="12">
     </vc:noticias>
+    <br style="clear:both;" />
 </div>
 
 
+<script>
+    (function ($) {
+        $(function () {
+            var jcarousel = $('.jcarousel');
+
+            jcarousel
+                .on('jcarousel:reload jcarousel:create', function () {
+                    var carousel = $(this),
+                        width = carousel.innerWidth();
 
 
-@*<img src="~/russia-kremlin-getty.jpg" asp-append-version="true" width="200px" />*@
-@*<select asp-></select>*@
+                    carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
+                })
+                .jcarousel({
+                    wrap: 'circular'
+                });
+
+            $('.jcarousel-control-prev')
+                .jcarouselControl({
+                    target: '-=1'
+                });
+
+            $('.jcarousel-control-next')
+                .jcarouselControl({
+                    target: '+=1'
+                });
+
+            $('.jcarousel-pagination')
+                .on('jcarouselpagination:active', 'a', function () {
+                    $(this).addClass('active');
+                })
+                .on('jcarouselpagination:inactive', 'a', function () {
+                    $(this).removeClass('active');
+                })
+                .on('click', function (e) {
+                    e.preventDefault();
+                })
+                .jcarouselPagination({
+                    perPage: 1,
+                    item: function (page) {
+                        return '<a href="#' + page + '">' + page + '</a>';
+                    }
+                });
+        });
+    })(jQuery);
+</script>
 
 
-<email mail-to="rodolfo"></email>
 
-@*<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-<script type="text/javascript">
-
-    $.get("http://localhost:9833/api/times/", function (data, status) {
-        console.log("Data: " + data);
-    });
-</script>*@

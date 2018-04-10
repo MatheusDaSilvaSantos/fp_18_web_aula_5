@@ -2,7 +2,10 @@
 {
     public class Noticia
     {
-        public int Id { get; internal set; }
-        public string Titulo { get; internal set; }
+        public int Id { get; set; }
+        public string Titulo { get; set; }
+        public string Imagem { get; set; }
+        public string DescricaoImagem { get; set; }
+        public string Url { get; set; }
     }
 }

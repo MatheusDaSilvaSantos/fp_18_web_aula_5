@@ -1,4 +1,5 @@
-﻿using fp_web_aula_1.Controllers;
+﻿using fp_18_web_aula_1_core.Services;
+using fp_web_aula_1.Controllers;
 using fp_web_aula_1_core.Models;
 using fp_web_aula_1_core.Services;
 using Microsoft.AspNetCore.Builder;
@@ -14,9 +15,12 @@ namespace fp_web_aula_1
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IChaveService, ChaveService>();
+            services.AddScoped<INoticiaService, NoticiaService>();
+
+
             services.AddTransient<ILogerApi, LogerApi>();
             //services.AddScoped<ILogerApi, LogerApi>();
-            services.AddScoped<INoticiaService, NoticiaService>();
             //services.AddSingleton<ILogerApi, LogerApi>();
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb2;Trusted_Connection=True;ConnectRetryCount=0";
