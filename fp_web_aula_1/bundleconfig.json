@@ -1,0 +1,10 @@
+[
+  {
+    "outputFileName": "wwwroot/css/estilosprincipais.css",
+    "inputFiles": [
+      "wwwroot/css/custom.css",
+      "wwwroot/css/jcarousel.basic.css",
+      "wwwroot/css/site.css"
+    ]
+  }
+]

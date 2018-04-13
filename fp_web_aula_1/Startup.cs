@@ -4,8 +4,10 @@ using fp_web_aula_1_core.Models;
 using fp_web_aula_1_core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,7 +29,17 @@ namespace fp_web_aula_1
             services.AddDbContext<CopaContext>
                 (options => options.UseSqlServer(connection));
 
+            services.AddMemoryCache();
+
             services.AddMvc();
+
+            services.Configure<GzipCompressionProviderOptions>(
+              o => o.Level = System.IO.Compression.CompressionLevel.Fastest);
+
+            services.AddResponseCompression(o =>
+            {
+                o.Providers.Add<GzipCompressionProvider>();
+            });
 
             services.AddAuthentication("app")
                 .AddCookie("app",
@@ -62,7 +74,18 @@ namespace fp_web_aula_1
             // app.UseMiddleware<MeuMiddleware>();
             app.UseMeuMiddleware();
 
-            app.UseStaticFiles();
+            app.UseResponseCompression();
+
+            //app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    const int durationInSeconds = 60 * 60 * 24;
+                    ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+                        "public,max-age=" + durationInSeconds;
+                }
+            });
 
             app.UseAuthentication();
 

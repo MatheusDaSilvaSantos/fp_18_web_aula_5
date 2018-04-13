@@ -5,7 +5,9 @@
     {
         <li>
             <a href="@item.Url">
-                <img src="@item.Imagem" alt="@item.DescricaoImagem" />
+                @*<img src="@item.Imagem" alt="@item.DescricaoImagem" />*@
+
+                <img class="lazy" data-src="@item.Imagem"/>
                 <span>
                     @item.Titulo
                 </span>
